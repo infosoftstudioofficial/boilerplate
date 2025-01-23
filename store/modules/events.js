@@ -4,8 +4,7 @@ const initialState = () => {
       first: 10,
       skip: 0,
       title: ''
-    },
-    filterhistory: []
+    }
   }
 }
 
@@ -17,9 +16,6 @@ const mutations = {
   SET_FILTER (state, payload) {
     state.filter = Object.assign({}, state.filter, payload)
   },
-  SET_NEW_FILTER_HISTORY (state, payload) {
-    state.filterhistory.push(payload)
-  },
   RESET_EVENT_STATE (state) {
     /*
           FUNCTION:
@@ -30,14 +26,32 @@ const mutations = {
   }
 }
 
+const actions = {
+  POST_API ({ commit }, payload) {
+    return postApi(`${payload.api}`, payload.data)
+  },
+  GET_API ({ commit }, payload) {
+    return getApi(`${payload.api}`, payload.data)
+  },
+  DELETE_API ({ commit }, payload) {
+    return deleteApi(`${payload.api}`, payload.data)
+  },
+  DELETE_WITH_PAYLOAD_API ({ commit }, payload) {
+    return deleteApi(`${payload.api}`, { data: payload.data })
+  },
+  PATCH_API ({ commit }, payload) {
+    return patchApi(`${payload.api}`, payload)
+  }
+}
+
 const getters = {
-  filter: state => state.filter,
-  filterhistory: state => state.filterhistory
+  filter: state => state.filter
 }
 
 export default {
   namespaced: true,
   state,
   getters,
-  mutations
+  mutations,
+  actions
 }

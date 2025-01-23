@@ -82,7 +82,9 @@
       submit () {
         // let payload = {
         //   api: 'forgot/password',
-        //   email: this.email
+        //   data: {
+           //   email: this.email
+           // }
         // }
         // this.loading = true
         // this.SET_RESET_EMAIL(this.email)
