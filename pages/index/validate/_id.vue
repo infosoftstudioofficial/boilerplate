@@ -1,41 +1,40 @@
 <template>
-  <v-flex>
-    <nuxtlogo />
-    <igit-tobol />
-    {{ msg }}
-    <v-btn v-if="show" @click="goTo('/')">
-      proceed to login screen
-    </v-btn>
-  </v-flex>
+  <client-only>
+    <v-layout wrap justify-center align-center>
+      <v-flex xs12 sm7 md8 lg9>
+        <shared-account-validation :isReviewed="isReviewed"/>
+      </v-flex>
+    </v-layout>
+  </client-only>
 </template>
 
 <script>
-  import {
-    VERIFY_ACCOUNT
-  } from '~/plugins/mixins/queries/auth'
-  import Global from '~/plugins/mixins/global'
-
+  import { mapActions } from 'vuex'
   export default {
     data: () => ({
-      msg: 'validating account please wait',
-      show: false
+      loading: false,
+      isReviewed: false
     }),
-    mixins: [Global],
     methods: {
+      ...mapActions('events', ['POST_API']),
       sendvalidationtoken () {
-        let token = { token: this.$nuxt._route.params.id }
-        this.$apollo.mutate({
-          mutation: VERIFY_ACCOUNT,
-          variables: token,
-          fetchPolicy: 'no-cache'
-        }).then(data => {
-          if (data.data.verify_account.success === true) {
-            this.msg = 'Account is now verified'
-            this.show = true
-          } else {
-            this.msg = data.data.verify_account.errors.nonFieldErrors[0].message
-          }
-        })
+          this.isReviewed = true
+        // let payload = {
+        //   api: 'forgot/password',
+        //   data: {
+        //     token: this.$nuxt._route.params.id
+        //   }
+        // }
+        // this.loading = true
+        // this.POST_API(payload).then(res => {
+        //   this.isReviewed = true
+        // }).catch(err => {
+        //   if (err) {
+        //     this.isReviewed = false
+        //   }
+        // }).finally(() => {
+        //   this.loading = false
+        // })
       }
     },
     beforeRouteEnter (to, from, next) {

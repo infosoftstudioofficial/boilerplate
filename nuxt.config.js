@@ -52,7 +52,8 @@ module.exports = {
     {src: '~/plugins/vue-sample-uploader.js', ssr: false},
     '~/plugins/vue-js-modal',
     {src: '~/plugins/localStorage.js', ssr: false },
-    '~/plugins/filters.js'
+    '~/plugins/filters.js',
+    '~plugins/vue-the-mask.js'
   ],
   css: [
     '~/assets/style/app.styl',

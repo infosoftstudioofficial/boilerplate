@@ -1,7 +1,10 @@
 <template>
   <v-container fluid fill-height>
-  	<v-layout wrap justify-center align-center>
-  	  <v-flex xs12 md11>
+    <shared-toolbar />
+    <shared-navigation  :items="items" />
+  	<v-main>
+     <v-layout wrap justify-center align-center>
+      <v-flex xs12 md11>
        <v-card>
           <v-card-title>Dashboard</v-card-title>
           <v-card-text>For now this route will be the redirection since auth is not available</v-card-text>
@@ -11,12 +14,21 @@
          </v-card-text>
         </v-card> 
       </v-flex>
-  	</v-layout>
+    </v-layout> 
+    </v-main>
   </v-container>
 </template>
 <script>
   export default {
     middleware: 'client',
+    data() {
+      return {
+        items: [
+          { title: 'Dashboard', icon: 'mdi-home', name: 'dashboard' },
+          { title: 'FAQ', icon: 'mdi-frequently-asked-questions', name: 'faqs' }
+        ]
+      }
+    },
     methods: {
       newLink (payload) {
         if (process.client) {
